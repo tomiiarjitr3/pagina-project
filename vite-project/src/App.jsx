@@ -5,7 +5,6 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import PublicPage from './pages/About.jsx';
 import About from './pages/About.jsx';
 
 export default function App() {
@@ -30,7 +29,7 @@ export default function App() {
         />
         <Route
           path="/login"
-          element={<Login registeredUser={registeredUser} />}
+          element={<Login setInstitutionData={setInstitutionData} setRegisteredUser={setRegisteredUser} />}
         />
         <Route
           path="/register"

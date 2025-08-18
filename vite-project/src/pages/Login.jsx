@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Login({ registeredUser }) {
+function Login({ setInstitutionData, setRegisteredUser }) {
   const [input, setInput] = useState({ correo: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -10,17 +10,30 @@ function Login({ registeredUser }) {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (
-      registeredUser &&
-      input.correo === registeredUser.correo &&
-      input.password === registeredUser.password
-    ) {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(input),
+      });
+
+      if (!response.ok) {
+        throw new Error('Correo o contraseña incorrectos.');
+      }
+
+      const result = await response.json();
+
+      setInstitutionData(result.institutionData);
+      setRegisteredUser(result.userData);
       navigate('/dashboard');
-    } else {
-      setError('Correo o contraseña incorrectos.');
+
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -40,7 +53,7 @@ function Login({ registeredUser }) {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <button type="submit" style={{ marginTop: 0 }}>Ingresar</button>
+      <button type="submit">Ingresar</button>
     </form>
   );
 }

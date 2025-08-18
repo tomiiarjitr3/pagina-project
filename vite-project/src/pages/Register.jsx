@@ -30,16 +30,41 @@ function Register({ setInstitutionData, setRegisteredUser }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { correo, password, ...institution } = form;
+    const { fotoPerfil, fotoPreview, ...dataToSend } = form;
 
-    // Guardar datos por separado
-    setInstitutionData(institution);
-    setRegisteredUser({ correo, password });
+    const formData = new FormData();
+    formData.append('nombre', dataToSend.nombre);
+    formData.append('telefono', dataToSend.telefono);
+    formData.append('cuit', dataToSend.cuit);
+    formData.append('correo', dataToSend.correo);
+    formData.append('password', dataToSend.password);
+    if (fotoPerfil) {
+      formData.append('fotoPerfil', fotoPerfil);
+    }
+    
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        body: formData,
+      });
 
-    navigate('/dashboard');
+      if (!response.ok) {
+        throw new Error('El registro falló.');
+      }
+
+      const result = await response.json();
+      
+      setInstitutionData(result.institutionData);
+      setRegisteredUser(result.userData);
+      navigate('/dashboard');
+
+    } catch (error) {
+      console.error('Error durante el registro:', error);
+      // Aquí manejarías el error mostrando un mensaje al usuario
+    }
   };
 
   return (
