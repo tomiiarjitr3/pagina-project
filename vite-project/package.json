@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "mongodb": "^6.18.0",
     "mongoose": "^8.17.1",
+    "multer": "^2.0.2",
     "mysql": "^2.18.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

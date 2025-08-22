@@ -53,7 +53,7 @@ function Login({ setInstitutionData, setRegisteredUser }) {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <button type="submit">Ingresar</button>
+      <button type="submit" class="btn btn-primary">Ingresar</button>
     </form>
   );
 }

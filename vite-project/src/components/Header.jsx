@@ -13,7 +13,8 @@ const Header = () => {
             style={logoStyle}
           />
           <div style={leftButtonsStyle}>
-            <Link /dashboard" style={buttonStyle}>Dashboard</Link>
+            <Link to="/" style={buttonStyle}>Home</Link>
+            <Link to="/dashboard" style={buttonStyle}>Dashboard</Link>
             <Link to="/about" style={buttonStyle}>About</Link>
           </div>
         </div>
